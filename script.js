@@ -46,14 +46,20 @@ function playRound(playerSelection, computerSelection) {
 
 let playerSelection ;
 let computerSelection ;
-
+let answer;
 
 
 
 function game(){
     for (let i = 0; i < 5; i++) {
         playerSelection = prompt("Rock, Paper or Scissors?");
-        console.log(playRound(playerSelection, getComputerChoice()));
+        answer = playRound(playerSelection, getComputerChoice());
+        if(answer == "Error"){
+            console.log("Tie");
+            i--;
+        }else{
+            console.log(answer);
+        }
         
     }
 }
