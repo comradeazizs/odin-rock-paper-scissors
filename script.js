@@ -1,7 +1,7 @@
 function getComputerChoice() {
-    let number = Math.floor(Math.random()*3);
+    let number = Math.floor(Math.random() * 3);
     let answer;
-    switch (number){
+    switch (number) {
         case 0:
             answer = "rock";
             break;
@@ -14,53 +14,58 @@ function getComputerChoice() {
     };
     return answer;
 }
+let win = "You Win!";
+let lose = "You Lose!";
 
-function playRound(playerSelection, computerSelection) {
-    let ps = playerSelection.toLowerCase();
-    let cs = computerSelection;
+function playRound(ps, cs) {//playerSelection ComputerSelection
     let msg;
+
     switch (true) {
-        case (ps==cs):
-            msg = "Error";
+        case (ps == cs):
+            msg = "Tie";
             break;
         case (ps == "rock" && cs == "paper"):
-            msg = "You Lose! Paper beats Rock";
+            msg = `${lose} ${cs} beats ${ps}`;
             break;
         case (ps == "rock" && cs == "scissors"):
-            msg = "You Win! Rock beats Scissors";
+            msg = `${win} ${ps} beats ${cs}`;
             break;
         case (ps == "paper" && cs == "rock"):
-            msg = "You Win! Paper beats Rock";
+            msg = `${win} ${ps} beats ${cs}`;
             break;
         case (ps == "paper" && cs == "scissors"):
-            msg = "You Lose! Scissors beats Paper";
+            msg = `${lose} ${cs} beats ${ps}`;
             break;
         case (ps == "scissors" && cs == "paper"):
-            msg = "You Win! Scissors beats Paper";
+            msg = `${win} ${ps} beats ${cs}`;
             break;
         case (ps == "scissors" && cs == "rock"):
-            msg = "You Lose! Rock beats Scissors";
+            msg = `${lose} ${cs} beats ${ps}`;
     }
     return msg;
 }
 
-let playerSelection ;
-let computerSelection ;
 let answer;
 
+const message = document.querySelector("p#message");
+const score = document.querySelector("p#score");
+let playerScore = 0;
+let compScore = 0;
 
-
-function game(){
-    for (let i = 0; i < 5; i++) {
-        playerSelection = prompt("Rock, Paper or Scissors?");
-        answer = playRound(playerSelection, getComputerChoice());
-        if(answer == "Error"){
-            console.log("Tie");
-            i--;
-        }else{
-            console.log(answer);
-        }
-        
+function game(playerSelection) {
+    // console.log(playRound(playerSelection, getComputerChoice()));
+    let msg =  playRound(playerSelection, getComputerChoice());;
+    message.textContent = msg;
+    if ("You W" === msg.substring(0,5)){
+        playerScore++;
+    } else if ("You L" === msg.substring(0,5)) {
+        compScore++;
     }
+    score.textContent = `${playerScore} - ${compScore}`
 }
-game()
+
+
+const div = document.querySelector("div");
+div.addEventListener('click', e => {
+    game(e.target.alt);
+});
