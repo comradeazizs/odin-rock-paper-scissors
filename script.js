@@ -1,23 +1,20 @@
 function getComputerChoice() {
     let number = Math.floor(Math.random() * 3);
-    let answer;
+
     switch (number) {
         case 0:
-            answer = "rock";
-            break;
+            return "rock";
         case 1:
-            answer = "paper";
-            break;
+            return "paper";
         case 2:
-            answer = "scissors";
-            break;
+            return "scissors";
     };
-    return answer;
 }
+
 let win = "You Win!";
 let lose = "You Lose!";
 
-function playRound(ps, cs) {//playerSelection ComputerSelection
+function playRound(ps, cs) {//playerSelection computerSelection
     let msg;
 
     switch (true) {
@@ -45,6 +42,26 @@ function playRound(ps, cs) {//playerSelection ComputerSelection
     return msg;
 }
 
+function game(playerSelection) {
+    let msg = playRound(playerSelection, getComputerChoice());;
+    message.textContent = msg;
+    if ("You W" === msg.substring(0, 5)) {
+        playerScore++;
+    } else if ("You L" === msg.substring(0, 5)) {
+        compScore++;
+    }
+    score.textContent = `Score: player ${playerScore} - computer ${compScore}`
+    if (playerScore == 5) {
+        score.textContent = `Game over! You Won! Score: player ${playerScore} - computer ${compScore}`
+        playerScore = 0;
+        compScore = 0
+    } else if (compScore == 5) {
+        score.textContent = `Game over! You Lost! Score: player ${playerScore} - computer ${compScore}`
+        playerScore = 0;
+        compScore = 0
+    }
+}
+
 let answer;
 
 const message = document.querySelector("p#message");
@@ -52,20 +69,10 @@ const score = document.querySelector("p#score");
 let playerScore = 0;
 let compScore = 0;
 
-function game(playerSelection) {
-    // console.log(playRound(playerSelection, getComputerChoice()));
-    let msg =  playRound(playerSelection, getComputerChoice());;
-    message.textContent = msg;
-    if ("You W" === msg.substring(0,5)){
-        playerScore++;
-    } else if ("You L" === msg.substring(0,5)) {
-        compScore++;
-    }
-    score.textContent = `${playerScore} - ${compScore}`
-}
 
 
 const div = document.querySelector("div");
 div.addEventListener('click', e => {
     game(e.target.alt);
 });
+
